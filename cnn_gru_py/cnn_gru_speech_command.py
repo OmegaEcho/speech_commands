@@ -21,9 +21,9 @@ import numpy as np
 from sklearn import preprocessing #copy from echo 1110/2018
 
 import tensorflow as tf
-from tensorflow import keras
+from tensorflow import 
 from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, Dropout, Flatten, Lambda, BatchNormalization, Activation, LSTM, GRU, concatenate
+from tensorflow.keras.layers import Input, Dense, Permute, Reshape, Conv2D, MaxPooling2D, Dropout, Flatten, Lambda, BatchNormalization, Activation, LSTM, GRU, concatenate
 #from tensorflow.contrib.framework.python.ops import audio_ops as contrib_audio
 #from tensorflow.python.ops import io_ops
 #from tensorflow.python.platform import gfile
