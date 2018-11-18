@@ -52,7 +52,7 @@ default_test_wanted_words=["bed", "eight", "visual", "follow"]
 #for himl 
 speech_data_dir="/home/zhangjun/tensorflow/speech_siamese_zj/speech_dataset"
 default_model_path="/home/zhangjun/tensorflow/speech_siamese_zj/trained"
-default_processed_data_path="/home/hermitwang/Projects/pretrained/speech_siamese"
+default_processed_data_path="/home/zhangjun/tensorflow/speech_siamese_zj/processed_data"
 
 tf.set_random_seed(2)
 
@@ -327,7 +327,7 @@ def create_cnn_model(fingerprint_shape, is_training=True):
     model.add(MaxPooling2D())
     
     model.add(Flatten())
-    model.add(Dense(256))
+    model.add(Dense(1024))
     model.add(BatchNormalization())
     model.add(Activation("sigmoid"))
     
