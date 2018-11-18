@@ -442,7 +442,7 @@ test_samples = default_test_samples
 batch_size_numbers=[128, 256, 512, 1024, 2048]
 train_epochs = 30
 print("Start at " + str(datetime.datetime.now()))
-#mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_data, mfcc2_eval_data, eval_pairs, mfcc1_test_data, mfcc2_test_data, test_pairs = load_processed_data(local_train_samples=train_samples, local_test_samples=test_samples, local_preprocess='l2-normalize')
+mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_data, mfcc2_eval_data, eval_pairs, mfcc1_test_data, mfcc2_test_data, test_pairs = load_processed_data(local_train_samples=train_samples, local_test_samples=test_samples, local_preprocess='l2-normalize')
 '''
 for i in range(10):
     for j in range(4, 5):
