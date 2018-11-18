@@ -350,7 +350,7 @@ def create_lstm_model(local_input_shape, is_training=True):
     return model
 
 
- def create_siamese_model(input_shape, siamese_mode = 'concat'):
+def create_siamese_model(input_shape, siamese_mode = 'concat'):
     right_input = Input(input_shape)
     left_input = Input(input_shape)
     
