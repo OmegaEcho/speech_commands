@@ -390,9 +390,17 @@ def siamese_train(mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_da
     x2_train = mfcc2_train_data #.reshape((train_samples, default_mfcc_length, default_number_of_mfcc)) #mfcc_number is the data feature
     y_train = train_pairs  #keras.utils.to_categorical(pairs, num_classes=1)
     
-    
-    siamese_model.fit([x1_train, x2_train], y_train, epochs=local_epochs, batch_size=local_batch_size)
-    
+    # checkpoint &nearlystopping
+    filepath = default_model_path+"\\weights-improvement-{epoch:02d}-{val_acc:.2f}.h5"
+    save_best = ModelCheckpoint(filepath, verbose=1, save_best_only=True)
+    early_stop = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
+
+    siamese_model.fit([x1_train, x2_train], y_train,
+                      epochs=local_epochs,
+                      batch_size=local_batch_size,
+                      validation_split=0.1,
+                      callbacks=[save_best, early_stop],
+                      verbose=0)
     
     x1_test = mfcc1_eval_data #.reshape((default_test_samples, default_mfcc_length, default_number_of_mfcc))
     x2_test = mfcc2_eval_data #.reshape((default_test_samples, default_mfcc_length, default_number_of_mfcc))
@@ -424,18 +432,18 @@ def siamese_test(mfcc1_test_data, mfcc2_test_data, test_pairs):
 
 
 #load_processed_data(local_train_samples=10000, local_test_samples=100, local_preprocess='z-score')
-load_processed_data(local_train_samples=10000, local_test_samples=100, local_preprocess='l2-normalize')
+#load_processed_data(local_train_samples=10000, local_test_samples=100, local_preprocess='l2-normalize')
 #load_processed_data(local_train_samples=10000, local_test_samples=100, local_preprocess='global')
 #load_processed_data(local_train_samples=10000, local_test_samples=100, local_preprocess='max-min-scaler')
 
-'''
-train_samples = default_train_samples * 5
+
+train_samples = default_train_samples * 1
 test_samples = default_test_samples
 batch_size_numbers=[128, 256, 512, 1024, 2048]
 train_epochs = 30
 print("Start at " + str(datetime.datetime.now()))
-mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_data, mfcc2_eval_data, eval_pairs, mfcc1_test_data, mfcc2_test_data, test_pairs = load_processed_data(local_train_samples=train_samples, local_test_samples=test_samples, local_preprocess='l2-normalize')
-
+#mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_data, mfcc2_eval_data, eval_pairs, mfcc1_test_data, mfcc2_test_data, test_pairs = load_processed_data(local_train_samples=train_samples, local_test_samples=test_samples, local_preprocess='l2-normalize')
+'''
 for i in range(10):
     for j in range(4, 5):
         print("Train batch size " + str(batch_size_numbers[j]) + " of " + str(i+1) + " run start at " + str(datetime.datetime.now()) + ":")
@@ -445,3 +453,9 @@ for i in range(10):
     
         print(score)
 '''
+i = 0
+j = 4
+score=siamese_train(mfcc1_train_data, mfcc2_train_data, train_pairs, mfcc1_eval_data, mfcc2_eval_data, eval_pairs, local_siamese_mode='abs', local_batch_size=batch_size_numbers[j], local_epochs=train_epochs)
+print(score)
+score=siamese_test(mfcc1_test_data, mfcc2_test_data, test_pairs)
+print(score)
